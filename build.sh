@@ -15,8 +15,9 @@ if [[ ! -e $TMP/addresses_processed.txt ]]; then
 fi
 
 rm $TMP/pin2address &>/dev/null || true
+rm $(dirname $0)/final.csv
 IFS=' '
-echo "LAT,LNG,PID,NUM,STR,CITY,ZIP" >> $(dirname $0)/final.csv
+echo "LNG,LAT,PID,NUM,STR,CITY,ZIP" >> $(dirname $0)/final.csv
 while read -r geom; do
     PIN=$(echo "$geom" | jq -r -c '.properties | .KSPID')
     ADDRESSES=$(grep "$PIN" "$TMP/addresses_processed.txt" |\
